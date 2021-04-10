@@ -17,5 +17,32 @@ const todoSchema = mongoose.Schema({
 });
 
 
+// Instance Methods
+todoSchema.methods = {
+    findActive: function(){
+        return mongoose.model("Todo").find({status: "active"});
+    },
+    findActiveCallback: function(cb){
+        return mongoose.model('Todo').find({status: 'inactive'},cb);
+    },
+};
+
+
+// static methods
+todoSchema.statics = {
+    findByStatic: function (){
+        return this.find({title: /meeting/i});
+    }
+}
+
+
+// Query Helper methods
+todoSchema.query = {
+    byQueryHelper: function (lng){
+        return this.find({title: new RegExp(lng, "i")});
+    }
+}
+
+
 
 module.exports = todoSchema;
